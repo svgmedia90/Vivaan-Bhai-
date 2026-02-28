@@ -1,244 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vivaan Bhai</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Vivaan Bhai — VIP</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+  :root{
+    --gold1: #FFD700;
+    --gold2: #FFA500;
+    --bg1: #000;
+    --card-bg: rgba(255,255,255,0.04);
+  }
 
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#000000,#111111,#1a1a1a);
-color:white;
-overflow:hidden;
-}
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;}
 
-/* GOLD PARTICLES */
-body::before{
-content:"";
-position:absolute;
-width:200%;
-height:200%;
-background-image:radial-gradient(rgba(255,215,0,0.15) 1px, transparent 1px);
-background-size:50px 50px;
-animation:moveParticles 25s linear infinite;
-z-index:0;
-}
+  body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(180deg,#060606 0%, #0f0f0f 60%);
+    color:#fff;
+    padding:24px;
+    overflow-y:auto;
+  }
 
-@keyframes moveParticles{
-from{transform:translate(0,0);}
-to{transform:translate(-300px,-300px);}
-}
+  /* subtle gold particle grid */
+  body::before{
+    content:"";
+    pointer-events:none;
+    position:fixed;
+    inset:-30%;
+    background-image:
+      radial-gradient(rgba(255,215,0,0.09) 1px, transparent 1px);
+    background-size:46px 46px;
+    opacity:0.55;
+    transform:rotate(12deg);
+    filter:blur(6px) saturate(1.2);
+    z-index:0;
+    animation:slowMove 25s linear infinite;
+  }
+  @keyframes slowMove{ from{transform:translate(0,0) rotate(12deg);} to{transform:translate(-250px,-250px) rotate(12deg);} }
 
-/* GLASS CARD */
-.container{
-position:relative;
-z-index:1;
-width:400px;
-padding:35px;
-border-radius:25px;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,215,0,0.2);
-box-shadow:0 0 40px rgba(255,215,0,0.15);
-text-align:center;
-}
+  /* container card */
+  .card{
+    position:relative;
+    width:100%;
+    max-width:420px;
+    border-radius:26px;
+    background:var(--card-bg);
+    border:1px solid rgba(255,215,0,0.12);
+    box-shadow:0 10px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+    padding:32px 28px;
+    z-index:2;
+    backdrop-filter: blur(14px) saturate(120%);
+    transform-origin:center;
+    animation:floatCard 6s ease-in-out infinite;
+  }
+  @keyframes floatCard{
+    0%{ transform:translateY(0px); }
+    50%{ transform:translateY(-6px) scale(1.002); }
+    100%{ transform:translateY(0px); }
+  }
 
-/* LOGO WRAPPER */
-.logo-wrapper{
-position:relative;
-width:160px;
-height:160px;
-margin:auto;
-display:flex;
-justify-content:center;
-align-items:center;
-}
+  /* logo area */
+  .logo-area{ display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:8px; }
 
-/* ROTATING GOLD RING */
-.logo-ring{
-position:absolute;
-width:170px;
-height:170px;
-border-radius:50%;
-background:conic-gradient(#FFD700, #FFA500, #FFD700, #ffcc00, #FFD700);
-animation:rotateRing 4s linear infinite;
-box-shadow:
-0 0 30px rgba(255,215,0,0.9),
-0 0 60px rgba(255,165,0,0.6),
-0 0 90px rgba(255,215,0,0.4);
-}
+  .logo-wrapper{
+    position:relative;
+    width:150px;
+    height:150px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+  }
 
-/* STATIC IMAGE */
-.logo-wrapper img{
-position:relative;
-width:145px;
-height:145px;
-border-radius:50%;
-border:5px solid #111;
-z-index:2;
-box-shadow:0 0 25px rgba(255,215,0,0.8);
-}
+  /* rotating thin ring (slightly thinner + smoother) */
+  .logo-ring{
+    position:absolute;
+    width:162px;
+    height:162px;
+    border-radius:50%;
+    background:conic-gradient(from 0deg, var(--gold1), var(--gold2), #ffd54a, var(--gold1));
+    filter:blur(2px) contrast(1.05) saturate(1.1);
+    z-index:1;
+    opacity:0.98;
+    animation:rotateRing 5.5s linear infinite;
+    box-shadow:
+      0 0 20px rgba(255,215,0,0.45),
+      0 0 50px rgba(255,165,0,0.18);
+  }
 
-@keyframes rotateRing{
-from{transform:rotate(0deg);}
-to{transform:rotate(360deg);}
-}
+  /* thin inner halo ring for depth */
+  .logo-ring::after{
+    content:"";
+    position:absolute; inset:6px; border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.04), transparent 25%);
+    z-index:2;
+  }
 
-h1{
-margin-top:20px;
-font-size:32px;
-font-weight:800;
-background:linear-gradient(45deg,#FFD700,#FFA500);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+  @keyframes rotateRing{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
-.timer-title{
-margin-top:15px;
-font-size:15px;
-color:#ccc;
-}
+  /* logo image: border reduced to 3px to be thinner */
+  .logo-img{
+    position:relative;
+    width:136px;
+    height:136px;
+    border-radius:50%;
+    overflow:hidden;
+    z-index:3;
+    border:3px solid rgba(0,0,0,0.85); /* thin dark border for crispness */
+    box-shadow:
+      0 6px 28px rgba(0,0,0,0.6),
+      0 0 38px rgba(255,205,0,0.08);
+    background:#000;
+  }
+  .logo-img img{ width:100%;height:100%;object-fit:cover;display:block; }
 
-#countdown{
-font-size:30px;
-font-weight:700;
-color:#FFD700;
-margin-top:5px;
-}
+  /* little animated sparkles around ring */
+  .spark{
+    pointer-events:none;
+    position:absolute;
+    inset: -12px;
+    z-index:0;
+    background:
+      radial-gradient(circle at 10% 20%, rgba(255,240,150,0.85) 2px, transparent 6px),
+      radial-gradient(circle at 80% 40%, rgba(255,230,120,0.6) 1.5px, transparent 5px),
+      radial-gradient(circle at 60% 85%, rgba(255,210,80,0.45) 2px, transparent 6px);
+    filter:blur(4px) saturate(1.2);
+    animation:twinkle 3.2s linear infinite;
+  }
+  @keyframes twinkle{
+    0%{opacity:0.75; transform:scale(0.98);}
+    50%{opacity:1; transform:scale(1.03);}
+    100%{opacity:0.75; transform:scale(0.98);}
+  }
 
-/* DESCRIPTION */
-.description{
-margin-top:25px;
-}
+  /* heading + trusted count */
+  h1{
+    font-size:34px; font-weight:800; margin-top:6px;
+    background:linear-gradient(90deg,var(--gold1),var(--gold2));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    letter-spacing:0.4px;
+  }
 
-.desc-line{
-font-size:18px;
-display:flex;
-justify-content:center;
-align-items:center;
-margin-bottom:18px;
-}
+  .trusted{
+    margin-top:6px; color:#cfc7a0; font-weight:600; opacity:0.95; font-size:13px;
+  }
 
-.tick{
-font-size:20px;
-margin-right:10px;
-background:linear-gradient(45deg,#FFD700,#FFA500,#FFD700);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-text-shadow:0 0 15px rgba(255,215,0,1);
-animation:glowPulse 1.5s infinite alternate;
-}
+  .timer-title{ margin-top:14px; color:#cfcfcf; font-size:14px; opacity:0.85; }
+  #countdown{ font-size:34px; color:var(--gold1); font-weight:800; margin-top:6px; }
 
-@keyframes glowPulse{
-from{filter:brightness(1);}
-to{filter:brightness(1.8);}
-}
+  /* description with animated golden ticks */
+  .description{ margin-top:22px; padding:0 6px 2px 6px; }
 
-/* TELEGRAM BUTTON */
-.join-btn{
-display:inline-flex;
-align-items:center;
-justify-content:center;
-gap:10px;
-margin-top:25px;
-padding:16px 35px;
-font-size:16px;
-font-weight:600;
-text-decoration:none;
-border-radius:50px;
-background:linear-gradient(45deg,#FFD700,#FFA500);
-color:black;
-box-shadow:0 0 25px rgba(255,215,0,0.8);
-transition:0.3s;
-}
+  .desc-line{
+    display:flex; align-items:center; gap:12px; justify-content:flex-start;
+    margin:16px 0;
+    font-weight:700; font-size:17px;
+  }
 
-.join-btn:hover{
-transform:scale(1.07);
-box-shadow:0 0 45px rgba(255,215,0,1);
-}
+  .tick{
+    width:34px; height:34px; display:inline-grid; place-items:center;
+    border-radius:50%;
+    background:linear-gradient(180deg, rgba(255,235,130,0.12), rgba(255,200,60,0.04));
+    color:var(--gold1);
+    text-shadow:0 0 8px rgba(255,215,0,0.9);
+    box-shadow:0 6px 20px rgba(255,200,30,0.06), inset 0 -2px 6px rgba(0,0,0,0.25);
+    transform-origin:center;
+    animation:tickPop 1.6s ease-in-out infinite;
+  }
+  .tick i{ font-style:normal; font-size:18px; }
 
-.join-btn svg{
-width:20px;
-height:20px;
-fill:black;
-}
+  @keyframes tickPop{
+    0%{ transform:translateY(0) scale(1); opacity:0.92; filter:brightness(1); }
+    50%{ transform:translateY(-3px) scale(1.05); opacity:1; filter:brightness(1.25); }
+    100%{ transform:translateY(0) scale(1); opacity:0.92; filter:brightness(1); }
+  }
 
+  /* join button with shine sweep */
+  .join-row{ display:flex; justify-content:center; margin-top:26px; }
+  .join-btn{
+    --btn-h:56px;
+    display:inline-flex; align-items:center; gap:10px; justify-content:center;
+    padding:0 30px; height:var(--btn-h);
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--gold1),var(--gold2));
+    color:#0b0b0b; font-weight:800; text-decoration:none; font-size:16px;
+    box-shadow:0 10px 40px rgba(255,200,40,0.12), 0 0 26px rgba(255,215,0,0.12);
+    position:relative; overflow:hidden;
+    transition:transform .22s ease, box-shadow .22s ease;
+    border:1px solid rgba(0,0,0,0.12);
+  }
+  .join-btn:hover{ transform:translateY(-4px) scale(1.02); box-shadow:0 18px 55px rgba(255,200,40,0.18); }
+
+  /* shine sweep */
+  .join-btn::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(120deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.14) 30%, rgba(255,255,255,0.06) 60%, transparent 100%);
+    transform:translateX(-120%);
+    transition:transform .9s cubic-bezier(.2,.9,.2,1);
+    pointer-events:none;
+    mix-blend-mode:overlay;
+  }
+  .join-btn:hover::after{ transform:translateX(120%); }
+
+  .join-btn svg{ width:20px; height:20px; fill:#0b0b0b; }
+
+  /* small footer gap */
+  .bottom-space{ height:6px; }
+
+  /* responsive tweaks */
+  @media (max-width:460px){
+    .card{ padding:26px 18px; border-radius:22px; width:100%; }
+    h1{ font-size:28px; }
+    #countdown{ font-size:30px; }
+    .logo-wrapper{ width:136px; height:136px; }
+    .logo-ring{ width:146px; height:146px; }
+    .logo-img{ width:122px; height:122px; border-width:3px; }
+    .desc-line{ font-size:16px; gap:10px; }
+    .join-btn{ padding:0 22px; height:50px; font-size:15px; }
+  }
 </style>
 </head>
-
 <body>
 
-<div class="container">
+  <div class="card" role="main" aria-labelledby="main-title">
+    <div class="logo-area">
+      <div class="logo-wrapper" aria-hidden="true">
+        <div class="logo-ring" aria-hidden="true"></div>
+        <div class="spark" aria-hidden="true"></div>
+        <div class="logo-img"><img src="logo.png" alt="Vivaan Bhai"></div>
+      </div>
 
-<div class="logo-wrapper">
-<div class="logo-ring"></div>
-<img src="logo.png" alt="Logo">
-</div>
+      <h1 id="main-title">Vivaan Bhai</h1>
+      <div class="trusted">Trusted by <strong>3,950+</strong> members</div>
+    </div>
 
-<h1>Vivaan Bhai</h1>
+    <div class="timer-title" aria-live="polite">Vip Joining Ends In</div>
+    <div id="countdown" aria-atomic="true">50</div>
 
-<div class="timer-title">Vip Joining Ends In</div>
-<div id="countdown">50</div>
+    <div class="description" aria-label="Benefits">
+      <div class="desc-line"><span class="tick"><i>✔</i></span><div>Match Insights &amp; Updates</div></div>
+      <div class="desc-line"><span class="tick"><i>✔</i></span><div>Accurate Report With 95% Accuracy</div></div>
+      <div class="desc-line"><span class="tick"><i>✔</i></span><div>Strong Pre-Match Analysis</div></div>
+      <div class="desc-line"><span class="tick"><i>✔</i></span><div>Limited VIP Slots • Join Now</div></div>
+    </div>
 
-<div class="description">
+    <div class="join-row">
+      <a class="join-btn" href="https://t.me/+mndEQIt_kQxkY2M9" target="_blank" rel="noopener noreferrer" aria-label="Join Telegram Channel">
+        <!-- telegram icon (inline svg) -->
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.04 15.36l-.39 5.48c.56 0 .8-.24 1.08-.53l2.6-2.48 5.39 3.94c.99.55 1.69.26 1.96-.92l3.55-16.66c.32-1.5-.54-2.08-1.5-1.72L1.52 9.28c-1.45.56-1.43 1.37-.25 1.74l4.87 1.52 11.3-7.13c.53-.33 1.02-.15.62.18"/></svg>
+        <span>Join Telegram Channel</span>
+      </a>
+    </div>
 
-<div class="desc-line">
-<span class="tick">✔</span>
-<b>Match Insights & Updates</b>
-</div>
+    <div class="bottom-space"></div>
+  </div>
 
-<div class="desc-line">
-<span class="tick">✔</span>
-<b>Accurate Report With 95% Accuracy</b>
-</div>
+  <script>
+    // countdown
+    (function(){
+      let timeLeft = 50;
+      const el = document.getElementById('countdown');
+      const iv = setInterval(()=>{
+        timeLeft--;
+        el.textContent = timeLeft > 0 ? timeLeft : 'Closed';
+        if(timeLeft <= 0) clearInterval(iv);
+      },1000);
+    })();
 
-<div class="desc-line">
-<span class="tick">✔</span>
-<b>Strong Pre-Match Analysis</b>
-</div>
-
-<div class="desc-line">
-<span class="tick">✔</span>
-<b>Limited VIP Slots • Join Now</b>
-</div>
-
-</div>
-
-<a href="https://t.me/+mndEQIt_kQxkY2M9" class="join-btn" target="_blank">
-<svg viewBox="0 0 24 24">
-<path d="M9.04 15.36l-.39 5.48c.56 0 .8-.24 1.08-.53l2.6-2.48 5.39 3.94c.99.55 1.69.26 1.96-.92l3.55-16.66c.32-1.5-.54-2.08-1.5-1.72L1.52 9.28c-1.45.56-1.43 1.37-.25 1.74l4.87 1.52 11.3-7.13c.53-.33 1.02-.15.62.18"/>
-</svg>
-Join Telegram Channel
-</a>
-
-</div>
-
-<script>
-let timeLeft = 50;
-let countdown = document.getElementById("countdown");
-
-let timer = setInterval(function(){
-timeLeft--;
-countdown.textContent = timeLeft;
-if(timeLeft <= 0){
-clearInterval(timer);
-countdown.textContent = "Closed";
-}
-},1000);
-</script>
+    // Optional: small UI join counter bump on button click (only visual)
+    (function(){
+      const joinBtn = document.querySelector('.join-btn');
+      const trustedEl = document.querySelector('.trusted');
+      let count = 3950;
+      joinBtn.addEventListener('click', ()=>{
+        count += Math.floor(Math.random()*3)+1;
+        trustedEl.innerHTML = `Trusted by <strong>${count.toLocaleString()}</strong> members`;
+        // let link open naturally - visual bump only
+      });
+    })();
+  </script>
 
 </body>
 </html>
